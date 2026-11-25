@@ -1,0 +1,301 @@
+/* VYOMA — Atmospheric Intelligence & Telemetry Stylesheet */
+
+:root {
+  --vyoma-bg-deep: #070D19;
+  --vyoma-bg-mid: #0E1A2F;
+  --vyoma-cosmos-top: #050A14;
+  --vyoma-cosmos-bottom: #0D1B33;
+  --vyoma-card-bg: rgba(16, 28, 48, 0.65);
+  --vyoma-card-border: rgba(56, 189, 248, 0.15);
+  --vyoma-accent: #0EA5E9;
+  --vyoma-accent-glow: #38BDF8;
+  --vyoma-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  background-color: #040812;
+  color: #F8FAFC;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+button, a, input, [role="button"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Mobile-First Centered Frame (max-width 480px on desktop with subtle outer glow) */
+.vyoma-viewport {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.08) 0%, transparent 55%), #040812;
+}
+
+.vyoma-shell {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  background: linear-gradient(180deg, var(--vyoma-bg-deep) 0%, var(--vyoma-bg-mid) 100%);
+  transition: all 300ms var(--vyoma-ease);
+}
+
+@media (min-width: 500px) {
+  .vyoma-viewport {
+    padding: 20px 12px;
+    align-items: stretch;
+  }
+  .vyoma-shell {
+    min-height: calc(100vh - 40px);
+    border-radius: 32px;
+    border: 1px solid rgba(56, 189, 248, 0.16);
+    box-shadow: 0 0 80px rgba(14, 165, 233, 0.14), 0 30px 70px rgba(0, 0, 0, 0.75);
+  }
+}
+
+.vyoma-cosmos-bg {
+  background: radial-gradient(circle at 80% 12%, rgba(56, 189, 248, 0.14), transparent 45%),
+              radial-gradient(circle at 20% 75%, rgba(14, 165, 233, 0.10), transparent 50%),
+              linear-gradient(180deg, var(--vyoma-cosmos-top) 0%, var(--vyoma-cosmos-bottom) 100%);
+}
+
+.vyoma-portal-bg {
+  background: radial-gradient(circle at 85% 10%, rgba(56, 189, 248, 0.16), transparent 42%),
+              radial-gradient(circle at 15% 85%, rgba(2, 132, 199, 0.12), transparent 48%),
+              linear-gradient(180deg, var(--vyoma-bg-deep) 0%, var(--vyoma-bg-mid) 100%);
+}
+
+/* Signature Glassmorphic Card */
+.vyoma-card {
+  background: var(--vyoma-card-bg);
+  border: 1px solid var(--vyoma-card-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: transform 300ms var(--vyoma-ease), border-color 300ms var(--vyoma-ease), background-color 300ms var(--vyoma-ease);
+}
+
+.vyoma-card-inner {
+  background: rgba(9, 17, 32, 0.55);
+  border: 1px solid rgba(56, 189, 248, 0.12);
+  transition: all 300ms var(--vyoma-ease);
+}
+
+/* Hidden Scrollbar on Horizontal Carousels */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Cyan Shimmer Loading Skeleton */
+@keyframes cyanShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.vyoma-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(16, 28, 48, 0.65) 25%,
+    rgba(56, 189, 248, 0.16) 50%,
+    rgba(16, 28, 48, 0.65) 75%
+  );
+  background-size: 200% 100%;
+  animation: cyanShimmer 1.6s infinite linear;
+  border: 1px solid rgba(56, 189, 248, 0.14);
+}
+
+/* Entry & Ambient Animations */
+@keyframes screenEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vyoma-enter {
+  animation: screenEnter 320ms var(--vyoma-ease) forwards;
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.animate-float-slow {
+  animation: floatSlow 5.5s ease-in-out infinite;
+}
+
+@keyframes breatheRing {
+  0%, 100% {
+    transform: scale(0.95);
+    opacity: 0.32;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 0.65;
+  }
+}
+
+.animate-breathe-ring {
+  animation: breatheRing 4.5s ease-in-out infinite;
+}
+
+@keyframes twinkleStar {
+  0%, 100% {
+    opacity: 0.25;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.15);
+  }
+}
+
+.animate-twinkle {
+  animation: twinkleStar 3.8s ease-in-out infinite;
+}
+
+@keyframes radarPing {
+  0% {
+    transform: scale(0.75);
+    opacity: 0.9;
+  }
+  75%, 100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.radar-ping-ring {
+  animation: radarPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes radarSweep {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.radar-sweep-cone {
+  animation: radarSweep 3.2s linear infinite;
+  transform-origin: center;
+}
+
+.vyoma-station-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.vyoma-station-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  background: rgba(7, 13, 25, 0.82);
+  border: 1px solid rgba(56, 189, 248, 0.38);
+  color: #F8FAFC;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  transition: transform 200ms ease, border-color 200ms ease, background-color 200ms ease;
+}
+
+.vyoma-station-pill:hover {
+  transform: scale(1.08);
+  border-color: #38BDF8;
+  background: rgba(14, 165, 233, 0.28);
+}
+
+/* Smooth Collapse/Expand Wrapper */
+.telemetry-collapse-grid {
+  display: grid;
+  transition: grid-template-rows 300ms var(--vyoma-ease), opacity 300ms var(--vyoma-ease);
+}
+
+.telemetry-collapse-grid[data-open="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.telemetry-collapse-grid[data-open="false"] {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+
+.telemetry-collapse-inner {
+  overflow: hidden;
+}
+
+/* Leaflet Dark Overrides */
+.vyoma-radar-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 620px;
+}
+
+@media (min-width: 500px) {
+  .vyoma-radar-container {
+    height: calc(100vh - 40px);
+    min-height: 640px;
+  }
+}
+
+.leaflet-container {
+  font-family: var(--font-sans) !important;
+  background: #070D19 !important;
+  outline: none !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.vyoma-dark-base-tile {
+  filter: brightness(0.76) contrast(1.18) sepia(0.32) hue-rotate(185deg) saturate(1.7);
+}
+
+.osm-dark-fallback .leaflet-tile-pane {
+  filter: invert(96%) hue-rotate(195deg) brightness(86%) contrast(92%) saturate(75%);
+}
