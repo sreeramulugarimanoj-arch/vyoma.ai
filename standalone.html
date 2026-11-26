@@ -73,7 +73,7 @@ button, a, input, [role="button"] {
   font-variant-numeric: tabular-nums;
 }
 
-/* Mobile-First Centered Frame (max-width 480px on desktop with subtle outer glow) */
+/* Responsive Viewport Shell (Full-bleed mobile, flexible tablet & desktop layout) */
 .vyoma-viewport {
   min-height: 100vh;
   width: 100%;
@@ -84,7 +84,6 @@ button, a, input, [role="button"] {
 
 .vyoma-shell {
   width: 100%;
-  max-width: 480px;
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
@@ -92,14 +91,15 @@ button, a, input, [role="button"] {
   transition: all 300ms var(--vyoma-ease);
 }
 
-@media (min-width: 500px) {
+@media (min-width: 768px) {
   .vyoma-viewport {
-    padding: 20px 12px;
+    padding: 16px;
     align-items: stretch;
   }
   .vyoma-shell {
-    min-height: calc(100vh - 40px);
-    border-radius: 32px;
+    max-width: 1380px;
+    min-height: calc(100vh - 32px);
+    border-radius: 28px;
     border: 1px solid rgba(56, 189, 248, 0.16);
     box-shadow: 0 0 80px rgba(14, 165, 233, 0.14), 0 30px 70px rgba(0, 0, 0, 0.75);
   }
@@ -308,13 +308,13 @@ button, a, input, [role="button"] {
   width: 100%;
   height: 100vh;
   height: 100dvh;
-  min-height: 620px;
+  min-height: 580px;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 768px) {
   .vyoma-radar-container {
-    height: calc(100vh - 40px);
-    min-height: 640px;
+    height: calc(100vh - 32px);
+    min-height: 620px;
   }
 }
 
@@ -2034,8 +2034,8 @@ function LandingPortalScreen({ onLaunchRadar, onSelectCity, savedCities }) {
       </div>
 
       {/* Centered Glassmorphic Hero Card */}
-      <div className="relative z-10 my-auto py-6">
-        <div className="vyoma-card rounded-3xl p-6 sm:p-7 text-center relative overflow-hidden">
+      <div className="relative z-10 my-auto py-6 w-full max-w-xl mx-auto">
+        <div className="vyoma-card rounded-3xl p-6 sm:p-8 md:p-10 text-center relative overflow-hidden">
           <div className="mb-4">
             <CelestialIllustration variant="portal" />
           </div>
@@ -2044,7 +2044,7 @@ function LandingPortalScreen({ onLaunchRadar, onSelectCity, savedCities }) {
             <span>{"\u2022"} 2030 PRECISION TELEMETRY</span>
           </div>
 
-          <h1 className="mt-4 text-3xl sm:text-[34px] font-light tracking-[0.42em] text-white pl-[0.42em]">
+          <h1 className="mt-4 text-3xl sm:text-4xl font-light tracking-[0.42em] text-white pl-[0.42em]">
             VYOMA
           </h1>
 
@@ -2052,13 +2052,13 @@ function LandingPortalScreen({ onLaunchRadar, onSelectCity, savedCities }) {
             ATMOSPHERIC INTELLIGENCE
           </div>
 
-          <p className="mt-3.5 text-xs sm:text-[13px] text-slate-300/80 leading-relaxed max-w-[290px] mx-auto">
+          <p className="mt-3.5 text-xs sm:text-sm text-slate-300/80 leading-relaxed max-w-md mx-auto">
             Instantaneous atmospheric telemetry &amp; radar intelligence.
           </p>
 
           <button
             onClick={onLaunchRadar}
-            className="mt-6 w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-[#0284C7] to-[#0EA5E9] hover:brightness-110 active:scale-[0.98] text-white font-semibold text-sm tracking-wide shadow-[0_8px_28px_rgba(14,165,233,0.4)] transition-all duration-300 flex items-center justify-center gap-2"
+            className="mt-6 w-full max-w-sm mx-auto py-3.5 px-5 rounded-2xl bg-gradient-to-r from-[#0284C7] to-[#0EA5E9] hover:brightness-110 active:scale-[0.98] text-white font-semibold text-sm tracking-wide shadow-[0_8px_28px_rgba(14,165,233,0.4)] transition-all duration-300 flex items-center justify-center gap-2"
           >
             <span>Launch World Radar</span>
             <span>{"\u2192"}</span>
@@ -2093,7 +2093,7 @@ function LandingPortalScreen({ onLaunchRadar, onSelectCity, savedCities }) {
 }
 
 /* ==========================================================================
-   SCREEN 2: WORLD RADAR COMMAND (SATELLITE, WEATHER MAP & DARK RADAR)
+   SCREEN 2: WORLD RADAR COMMAND (WEATHER MAP & SATELLITE)
    ========================================================================== */
 function WorldRadarScreen({ initialCity, onClose, onScanCity }) {
   const mapContainerRef = useRef(null);
@@ -2105,7 +2105,7 @@ function WorldRadarScreen({ initialCity, onClose, onScanCity }) {
   const radarLayerRef = useRef(null);
   const hubMarkersRef = useRef([]);
 
-  const [mapMode, setMapMode] = useState("weather"); // "weather" | "satellite" | "dark"
+  const [mapMode, setMapMode] = useState("weather"); // "weather" | "satellite"
   const [radarActive, setRadarActive] = useState(true);
   const [cloudActive, setCloudActive] = useState(true);
   const [radarHost, setRadarHost] = useState("https://tilecache.rainviewer.com");
@@ -2250,7 +2250,7 @@ function WorldRadarScreen({ initialCity, onClose, onScanCity }) {
     };
   }, [inspectCoordinates]);
 
-  // Switch Base Map Layers (Dark Radar / Photorealistic Satellite / Weather Map)
+  // Switch Base Map Layers (Weather Map / Photorealistic Satellite)
   useEffect(() => {
     const map = mapInstanceRef.current;
     const L = window.L;
@@ -2506,8 +2506,8 @@ function WorldRadarScreen({ initialCity, onClose, onScanCity }) {
       />
 
       {/* Floating Top Command Card */}
-      <div className="relative z-20 p-3">
-        <div className="vyoma-card rounded-3xl p-3.5 shadow-2xl space-y-2.5">
+      <div className="relative z-20 p-3 md:p-4 pointer-events-none">
+        <div className="vyoma-card rounded-3xl p-3.5 shadow-2xl space-y-2.5 w-full md:max-w-[430px] pointer-events-auto">
           {/* Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -2583,8 +2583,8 @@ function WorldRadarScreen({ initialCity, onClose, onScanCity }) {
             )}
           </form>
 
-          {/* Map Layer Mode Switcher: Weather Map | Satellite | Dark Radar */}
-          <div className="grid grid-cols-3 gap-1.5 p-1 rounded-2xl vyoma-card-inner">
+          {/* Map Layer Mode Switcher: Weather Map | Satellite */}
+          <div className="grid grid-cols-2 gap-1.5 p-1 rounded-2xl vyoma-card-inner">
             <button
               type="button"
               onClick={() => setMapMode("weather")}
@@ -2609,19 +2609,6 @@ function WorldRadarScreen({ initialCity, onClose, onScanCity }) {
             >
               <Icon name="satellite" size={13} />
               <span>Satellite</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setMapMode("dark")}
-              className={`py-1.5 px-2 rounded-xl text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-all duration-150 ${
-                mapMode === "dark"
-                  ? "bg-[#0EA5E9] text-[#070D19] shadow-[0_0_14px_rgba(14,165,233,0.45)]"
-                  : "text-slate-300 hover:text-white"
-              }`}
-            >
-              <Icon name="layers" size={13} />
-              <span>Dark Radar</span>
             </button>
           </div>
 
@@ -2738,7 +2725,7 @@ function WorldRadarScreen({ initialCity, onClose, onScanCity }) {
 
       {/* Bottom Target Telemetry Preview Card (Tap any region or map point) */}
       {selectedTarget && (
-        <div className="absolute bottom-3 inset-x-3 z-20 vyoma-enter">
+        <div className="absolute bottom-3 inset-x-3 md:inset-x-auto md:left-3 md:w-[430px] z-20 vyoma-enter">
           <div className="vyoma-card rounded-2xl p-3.5 flex items-center justify-between gap-3 shadow-2xl">
             <div className="flex items-center gap-3 min-w-0">
               <div className="w-11 h-11 rounded-2xl vyoma-card-inner flex items-center justify-center shrink-0">
@@ -2851,192 +2838,198 @@ function TelemetryDashboardScreen({
   const isLiveSource = weatherData?._source === "Open-Meteo Live";
 
   return (
-    <div className="min-h-full vyoma-portal-bg px-4 pt-5 pb-8 space-y-4 vyoma-enter">
-      {/* 1. Top Navigation Bar */}
-      <header className="flex items-center justify-between gap-2">
-        <button
-          onClick={onBack}
-          aria-label="Return to Landing Portal"
-          className="w-10 h-10 rounded-full vyoma-card flex items-center justify-center text-slate-200 hover:text-white hover:border-sky-400/45 active:scale-95 transition-all"
-        >
-          <Icon name="arrow-left" size={18} />
-        </button>
+    <div className="min-h-full vyoma-portal-bg px-4 sm:px-6 lg:px-8 pt-5 pb-8 vyoma-enter">
+      <div className="max-w-6xl mx-auto space-y-4 lg:space-y-5">
+        {/* 1. Top Navigation Bar */}
+        <header className="flex items-center justify-between gap-2">
+          <button
+            onClick={onBack}
+            aria-label="Return to Landing Portal"
+            className="w-10 h-10 rounded-full vyoma-card flex items-center justify-center text-slate-200 hover:text-white hover:border-sky-400/45 active:scale-95 transition-all"
+          >
+            <Icon name="arrow-left" size={18} />
+          </button>
 
-        <div className="text-center min-w-0 px-2">
-          <h1 className="text-lg font-bold text-white tracking-tight truncate">{city.name}</h1>
-          <div className="text-[11px] text-slate-400 truncate flex items-center justify-center gap-1.5">
-            <span>{city.country || "Global Telemetry"}</span>
-            {weatherData && (
-              <>
-                <span className="text-slate-600">{"\u2022"}</span>
-                <span className={isLiveSource ? "text-emerald-400" : "text-amber-300"}>
-                  {isLiveSource ? `Live ${localClockStr}` : "Offline"}
-                </span>
-              </>
-            )}
+          <div className="text-center min-w-0 px-2">
+            <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight truncate">{city.name}</h1>
+            <div className="text-[11px] sm:text-xs text-slate-400 truncate flex items-center justify-center gap-1.5">
+              <span>{city.country || "Global Telemetry"}</span>
+              {weatherData && (
+                <>
+                  <span className="text-slate-600">{"\u2022"}</span>
+                  <span className={isLiveSource ? "text-emerald-400" : "text-amber-300"}>
+                    {isLiveSource ? `Live ${localClockStr}` : "Offline"}
+                  </span>
+                </>
+              )}
+            </div>
           </div>
-        </div>
 
-        <div className="flex items-center gap-1.5">
-          <button
-            onClick={onRefresh}
-            disabled={refreshing}
-            title="Refresh Live Telemetry"
-            aria-label="Refresh Live Telemetry"
-            className="w-9 h-9 rounded-full vyoma-card flex items-center justify-center text-slate-300 hover:text-sky-300 hover:border-sky-400/45 active:scale-95 transition-all disabled:opacity-60"
-          >
-            <Icon name="refresh-cw" size={15} className={refreshing ? "animate-spin text-sky-400" : ""} />
-          </button>
-
-          <button
-            onClick={onOpenRadar}
-            title="Open World Radar"
-            aria-label="Open World Radar"
-            className="w-9 h-9 rounded-full vyoma-card flex items-center justify-center text-sky-300 hover:text-white hover:border-sky-400/45 active:scale-95 transition-all"
-          >
-            <Icon name="map" size={16} />
-          </button>
-
-          <button
-            onClick={onToggleSave}
-            title={isSaved ? "Saved City" : "Save City"}
-            aria-label="Toggle Favorite City"
-            className={`w-9 h-9 rounded-full vyoma-card flex items-center justify-center active:scale-95 transition-all ${
-              isSaved ? "text-[#38BDF8] border-sky-400/50 bg-sky-500/15" : "text-slate-300 hover:text-white"
-            }`}
-          >
-            <Icon
-              name="bookmark"
-              size={16}
-              fill={isSaved ? "currentColor" : "none"}
-            />
-          </button>
-        </div>
-      </header>
-
-      {/* Cyan Shimmer Skeletons while resolving Open-Meteo */}
-      {loadingTelemetry && !weatherData ? (
-        <div className="space-y-4">
-          <div className="h-32 rounded-3xl vyoma-skeleton" />
-          <div className="h-52 rounded-3xl vyoma-skeleton" />
-          <div className="h-44 rounded-3xl vyoma-skeleton" />
-          <div className="h-36 rounded-3xl vyoma-skeleton" />
-        </div>
-      ) : (
-        <>
-          {/* 2. Hero Current Weather Display */}
-          <section className="pt-2 pb-1 px-1 flex items-center justify-between">
-            <div>
-              <div className="flex items-start leading-none">
-                <span className="text-[60px] font-light tracking-tighter text-white tabular-nums">
-                  {currentTemp}
-                </span>
-                <span className="text-2xl font-normal text-sky-300 mt-2 ml-1">{"\u00B0"}C</span>
-              </div>
-              <div className="mt-2 flex items-center gap-2.5 text-sm">
-                <span className="text-slate-100 font-medium">{currentMeta.description}</span>
-                <span className="text-slate-400 tabular-nums">
-                  {loTemp}{"\u00B0"} ~ {hiTemp}{"\u00B0"}C
-                </span>
-              </div>
-            </div>
-
-            <div className="w-20 h-20 rounded-3xl vyoma-card flex items-center justify-center relative">
-              <div className="absolute inset-2 rounded-full bg-sky-400/15 blur-xl pointer-events-none" />
-              <WeatherGlyph type={currentMeta.icon} size={52} />
-            </div>
-          </section>
-
-          {/* 3. Hourly Atmosphere Module */}
-          <HourlyAtmosphereCard hourly={hourly} current={current} startIdx={currentHourIdx} />
-
-          {/* 4. Next 7 Days Forecast Module */}
-          <SevenDayForecastCard daily={daily} />
-
-          {/* 5. Expandable / Collapsible Telemetry Section */}
-          <div className="flex justify-center pt-1">
+          <div className="flex items-center gap-1.5">
             <button
-              onClick={() => setTelemetryExpanded(!telemetryExpanded)}
-              className="px-4 py-1.5 rounded-full vyoma-card hover:border-sky-400/45 text-[11px] font-semibold text-sky-300 flex items-center gap-1.5 active:scale-95 transition-all duration-300"
+              onClick={onRefresh}
+              disabled={refreshing}
+              title="Refresh Live Telemetry"
+              aria-label="Refresh Live Telemetry"
+              className="w-9 h-9 rounded-full vyoma-card flex items-center justify-center text-slate-300 hover:text-sky-300 hover:border-sky-400/45 active:scale-95 transition-all disabled:opacity-60"
             >
-              <span>{telemetryExpanded ? "Collapse Telemetry" : "Expand Telemetry"}</span>
-              <Icon name={telemetryExpanded ? "chevron-up" : "chevron-down"} size={14} />
+              <Icon name="refresh-cw" size={15} className={refreshing ? "animate-spin text-sky-400" : ""} />
+            </button>
+
+            <button
+              onClick={onOpenRadar}
+              title="Open World Radar"
+              aria-label="Open World Radar"
+              className="w-9 h-9 rounded-full vyoma-card flex items-center justify-center text-sky-300 hover:text-white hover:border-sky-400/45 active:scale-95 transition-all"
+            >
+              <Icon name="map" size={16} />
+            </button>
+
+            <button
+              onClick={onToggleSave}
+              title={isSaved ? "Saved City" : "Save City"}
+              aria-label="Toggle Favorite City"
+              className={`w-9 h-9 rounded-full vyoma-card flex items-center justify-center active:scale-95 transition-all ${
+                isSaved ? "text-[#38BDF8] border-sky-400/50 bg-sky-500/15" : "text-slate-300 hover:text-white"
+              }`}
+            >
+              <Icon
+                name="bookmark"
+                size={16}
+                fill={isSaved ? "currentColor" : "none"}
+              />
             </button>
           </div>
+        </header>
 
-          <div className="telemetry-collapse-grid" data-open={telemetryExpanded ? "true" : "false"}>
-            <div className="telemetry-collapse-inner space-y-4">
-              {/* 6-Metric Telemetry Grid (3 cols x 2 rows) */}
-              <section className="vyoma-card rounded-3xl p-4">
-                <div className="grid grid-cols-3 gap-3">
-                  <TelemetryMetricCell
-                    icon="thermometer"
-                    label="Feels like"
-                    value={`${feelsLike}\u00B0C`}
-                    sub={current?.cloud_cover !== undefined ? `Cloud ${Math.round(current.cloud_cover)}%` : null}
-                  />
-                  <TelemetryMetricCell
-                    icon="wind"
-                    label="Wind"
-                    value={`${windSpeed.toFixed(1)} km/h`}
-                    sub={`Force ${windForce} \u2022 ${windDir}${windGusts > windSpeed + 5 ? ` (G ${Math.round(windGusts)})` : ""}`}
-                  />
-                  <TelemetryMetricCell
-                    icon="droplet"
-                    label="Humidity"
-                    value={`${humidity}%`}
-                    sub={dewPoint !== null ? `Dew pt ${dewPoint}\u00B0C` : null}
-                  />
-                  <TelemetryMetricCell
-                    icon="sun"
-                    label="UV"
-                    value={getUvLabel(uvVal)}
-                    sub={`Index ${uvVal.toFixed(1)}`}
-                  />
-                  <TelemetryMetricCell
-                    icon="eye"
-                    label="Visibility"
-                    value={`${visibilityDisplay} km`}
-                  />
-                  <TelemetryMetricCell
-                    icon="gauge"
-                    label="Air pressure"
-                    value={`${pressureHpa} hPa`}
-                    sub="Sea level (MSL)"
-                  />
+        {/* Cyan Shimmer Skeletons while resolving Open-Meteo */}
+        {loadingTelemetry && !weatherData ? (
+          <div className="space-y-4">
+            <div className="h-32 rounded-3xl vyoma-skeleton" />
+            <div className="h-52 rounded-3xl vyoma-skeleton" />
+            <div className="h-44 rounded-3xl vyoma-skeleton" />
+            <div className="h-36 rounded-3xl vyoma-skeleton" />
+          </div>
+        ) : (
+          <>
+            {/* 2 & 3. Hero Current Weather + Hourly Atmosphere (Stacked on Mobile/Tablet, 2-Column on PC) */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5 items-stretch">
+              <section className="lg:col-span-4 lg:vyoma-card lg:rounded-3xl lg:p-6 pt-2 pb-1 px-1 flex items-center justify-between gap-4">
+                <div>
+                  <div className="flex items-start leading-none">
+                    <span className="text-[60px] lg:text-[64px] font-light tracking-tighter text-white tabular-nums">
+                      {currentTemp}
+                    </span>
+                    <span className="text-2xl font-normal text-sky-300 mt-2 ml-1">{"\u00B0"}C</span>
+                  </div>
+                  <div className="mt-2 flex flex-wrap items-center gap-2.5 text-sm">
+                    <span className="text-slate-100 font-medium">{currentMeta.description}</span>
+                    <span className="text-slate-400 tabular-nums">
+                      {loTemp}{"\u00B0"} ~ {hiTemp}{"\u00B0"}C
+                    </span>
+                  </div>
+                </div>
+
+                <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-3xl vyoma-card flex items-center justify-center relative shrink-0">
+                  <div className="absolute inset-2 rounded-full bg-sky-400/15 blur-xl pointer-events-none" />
+                  <WeatherGlyph type={currentMeta.icon} size={52} />
                 </div>
               </section>
 
-              {/* Air Quality Index (AQI) Card */}
-              <AqiTelemetryCard aqiData={aqiData} />
-
-              {/* Solar Arc (Sunrise & Sunset) Card */}
-              <SolarArcCard
-                sunriseStr={daily?.sunrise?.[0]}
-                sunsetStr={daily?.sunset?.[0]}
-                timezone={weatherData?.timezone || city.timezone}
-                utcOffsetSeconds={weatherData?.utc_offset_seconds}
-              />
+              <div className="lg:col-span-8 min-w-0">
+                <HourlyAtmosphereCard hourly={hourly} current={current} startIdx={currentHourIdx} />
+              </div>
             </div>
-          </div>
 
-          {/* 6. 5-Year Climate Trend Module (ERA5 Historical Archive) */}
-          <ClimateTrendCard
-            city={city}
-            climateData={climateData}
-            loadingClimate={loadingClimate}
-            climateMode={climateMode}
-            setClimateMode={setClimateMode}
-            selectedYear={selectedYear}
-            setSelectedYear={setSelectedYear}
-          />
+            {/* 4. Next 7 Days Forecast Module */}
+            <SevenDayForecastCard daily={daily} />
 
-          {/* 7. Footer */}
-          <footer className="pt-3 pb-2 text-center text-[11px] text-slate-500 tracking-wide">
-            VYOMA 2030 {"\u2022"} Atmospheric Telemetry &amp; Climate
-          </footer>
-        </>
-      )}
+            {/* 5. Expandable / Collapsible Telemetry Section */}
+            <div className="flex justify-center pt-1">
+              <button
+                onClick={() => setTelemetryExpanded(!telemetryExpanded)}
+                className="px-4 py-1.5 rounded-full vyoma-card hover:border-sky-400/45 text-[11px] font-semibold text-sky-300 flex items-center gap-1.5 active:scale-95 transition-all duration-300"
+              >
+                <span>{telemetryExpanded ? "Collapse Telemetry" : "Expand Telemetry"}</span>
+                <Icon name={telemetryExpanded ? "chevron-up" : "chevron-down"} size={14} />
+              </button>
+            </div>
+
+            <div className="telemetry-collapse-grid" data-open={telemetryExpanded ? "true" : "false"}>
+              <div className="telemetry-collapse-inner space-y-4">
+                {/* 6-Metric Telemetry Grid (3x2 on mobile/tablet, 6-in-1 row on PC) */}
+                <section className="vyoma-card rounded-3xl p-4">
+                  <div className="grid grid-cols-3 lg:grid-cols-6 gap-3">
+                    <TelemetryMetricCell
+                      icon="thermometer"
+                      label="Feels like"
+                      value={`${feelsLike}\u00B0C`}
+                      sub={current?.cloud_cover !== undefined ? `Cloud ${Math.round(current.cloud_cover)}%` : null}
+                    />
+                    <TelemetryMetricCell
+                      icon="wind"
+                      label="Wind"
+                      value={`${windSpeed.toFixed(1)} km/h`}
+                      sub={`Force ${windForce} \u2022 ${windDir}${windGusts > windSpeed + 5 ? ` (G ${Math.round(windGusts)})` : ""}`}
+                    />
+                    <TelemetryMetricCell
+                      icon="droplet"
+                      label="Humidity"
+                      value={`${humidity}%`}
+                      sub={dewPoint !== null ? `Dew pt ${dewPoint}\u00B0C` : null}
+                    />
+                    <TelemetryMetricCell
+                      icon="sun"
+                      label="UV"
+                      value={getUvLabel(uvVal)}
+                      sub={`Index ${uvVal.toFixed(1)}`}
+                    />
+                    <TelemetryMetricCell
+                      icon="eye"
+                      label="Visibility"
+                      value={`${visibilityDisplay} km`}
+                    />
+                    <TelemetryMetricCell
+                      icon="gauge"
+                      label="Air pressure"
+                      value={`${pressureHpa} hPa`}
+                      sub="Sea level (MSL)"
+                    />
+                  </div>
+                </section>
+
+                {/* Air Quality Index (AQI) + Solar Arc (Side-by-side on Tablet & PC) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <AqiTelemetryCard aqiData={aqiData} />
+
+                  <SolarArcCard
+                    sunriseStr={daily?.sunrise?.[0]}
+                    sunsetStr={daily?.sunset?.[0]}
+                    timezone={weatherData?.timezone || city.timezone}
+                    utcOffsetSeconds={weatherData?.utc_offset_seconds}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* 6. 5-Year Climate Trend Module (ERA5 Historical Archive) */}
+            <ClimateTrendCard
+              city={city}
+              climateData={climateData}
+              loadingClimate={loadingClimate}
+              climateMode={climateMode}
+              setClimateMode={setClimateMode}
+              selectedYear={selectedYear}
+              setSelectedYear={setSelectedYear}
+            />
+
+            {/* 7. Footer */}
+            <footer className="pt-3 pb-2 text-center text-[11px] text-slate-500 tracking-wide">
+              VYOMA 2030 {"\u2022"} Atmospheric Telemetry &amp; Climate
+            </footer>
+          </>
+        )}
+      </div>
     </div>
   );
 }
@@ -3245,7 +3238,7 @@ function SevenDayForecastCard({ daily }) {
         <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
           NEXT 7 DAYS FORECAST
         </span>
-        <span className="text-[10px] text-sky-400/80 font-medium">
+        <span className="text-[10px] text-sky-400/80 font-medium lg:hidden">
           Swipe horizontal {"\u2192"}
         </span>
       </div>
@@ -3256,7 +3249,7 @@ function SevenDayForecastCard({ daily }) {
         onMouseLeave={dragScroll.onMouseLeave}
         onMouseUp={dragScroll.onMouseUp}
         onMouseMove={dragScroll.onMouseMove}
-        className="flex items-stretch gap-2.5 overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing select-none pb-0.5"
+        className="flex lg:grid lg:grid-cols-7 items-stretch gap-2.5 overflow-x-auto lg:overflow-visible no-scrollbar cursor-grab lg:cursor-default active:cursor-grabbing select-none pb-0.5"
       >
         {daily.time.slice(0, 7).map((dateStr, idx) => {
           const dateObj = new Date(`${dateStr}T12:00:00`);
@@ -3271,7 +3264,7 @@ function SevenDayForecastCard({ daily }) {
           return (
             <div
               key={dateStr}
-              className={`min-w-[102px] shrink-0 rounded-2xl p-3 flex flex-col items-center text-center justify-between gap-2 transition-all ${
+              className={`min-w-[102px] lg:min-w-0 shrink-0 rounded-2xl p-3 flex flex-col items-center text-center justify-between gap-2 transition-all ${
                 idx === 0
                   ? "bg-sky-500/12 border border-sky-400/30"
                   : "vyoma-card-inner hover:border-sky-400/30"
@@ -3583,36 +3576,50 @@ function ClimateTrendCard({
           <div className="h-44 rounded-2xl vyoma-skeleton" />
         </div>
       ) : (
-        <>
-          {/* 3 Summary KPI Boxes */}
-          <div className="grid grid-cols-3 gap-2.5">
-            <div className="vyoma-card-inner rounded-2xl p-3">
-              <div className="text-[10px] text-slate-400">5-Yr Temp Shift</div>
-              <div className={`text-base font-bold tabular-nums mt-1 ${shiftVal >= 0 ? "text-rose-400" : "text-sky-400"}`}>
-                {shiftStr}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+          <div className="lg:col-span-5 flex flex-col justify-between gap-3">
+            {/* 3 Summary KPI Boxes */}
+            <div className="grid grid-cols-3 gap-2.5">
+              <div className="vyoma-card-inner rounded-2xl p-3">
+                <div className="text-[10px] text-slate-400">5-Yr Temp Shift</div>
+                <div className={`text-base font-bold tabular-nums mt-1 ${shiftVal >= 0 ? "text-rose-400" : "text-sky-400"}`}>
+                  {shiftStr}
+                </div>
+                <div className="text-[10px] text-slate-500 mt-0.5">vs 2021 base</div>
               </div>
-              <div className="text-[10px] text-slate-500 mt-0.5">vs 2021 base</div>
+
+              <div className="vyoma-card-inner rounded-2xl p-3">
+                <div className="text-[10px] text-slate-400">Avg Annual Rain</div>
+                <div className="text-base font-bold tabular-nums text-[#38BDF8] mt-1">
+                  {kpis?.avgAnnualRain ?? "--"} mm
+                </div>
+                <div className="text-[10px] text-slate-500 mt-0.5">5-year normal</div>
+              </div>
+
+              <div className="vyoma-card-inner rounded-2xl p-3">
+                <div className="text-[10px] text-slate-400">Wet Days / Yr</div>
+                <div className="text-base font-bold tabular-nums text-white mt-1">
+                  {kpis?.avgWetDays ?? "--"} days
+                </div>
+                <div className="text-[10px] text-slate-500 mt-0.5">Precip {"\u2265"} 1mm</div>
+              </div>
             </div>
 
-            <div className="vyoma-card-inner rounded-2xl p-3">
-              <div className="text-[10px] text-slate-400">Avg Annual Rain</div>
-              <div className="text-base font-bold tabular-nums text-[#38BDF8] mt-1">
-                {kpis?.avgAnnualRain ?? "--"} mm
+            {/* Factual Climate Intelligence Callout Box */}
+            <div className="rounded-2xl p-3.5 bg-sky-500/10 border border-sky-400/20 flex-1 flex flex-col justify-center">
+              <div className="flex items-center gap-1.5 text-[11px] font-bold tracking-[0.12em] uppercase text-[#38BDF8] mb-1.5">
+                <span>{"\uD83D\uDCA1"}</span>
+                <span>FACTUAL CLIMATE INTELLIGENCE</span>
               </div>
-              <div className="text-[10px] text-slate-500 mt-0.5">5-year normal</div>
-            </div>
-
-            <div className="vyoma-card-inner rounded-2xl p-3">
-              <div className="text-[10px] text-slate-400">Wet Days / Yr</div>
-              <div className="text-base font-bold tabular-nums text-white mt-1">
-                {kpis?.avgWetDays ?? "--"} days
-              </div>
-              <div className="text-[10px] text-slate-500 mt-0.5">Precip {"\u2265"} 1mm</div>
+              <p className="text-xs text-slate-200/90 leading-relaxed">
+                {climateData?.insight ||
+                  `Historical ERA5 archive data for ${city.name} indicates consistent seasonal patterns across 2021\u20132025.`}
+              </p>
             </div>
           </div>
 
           {/* Interactive Chart Container */}
-          <div className="vyoma-card-inner rounded-2xl p-3.5 transition-all duration-300">
+          <div className="lg:col-span-7 vyoma-card-inner rounded-2xl p-3.5 transition-all duration-300 flex flex-col justify-between">
             <div className="flex items-center justify-between gap-2 mb-3">
               <span className="text-[11px] font-medium text-slate-300">
                 {climateMode === "temp" ? "Mean Annual Temperature" : "Annual Total Rainfall"}
@@ -3662,19 +3669,7 @@ function ClimateTrendCard({
               })}
             </div>
           </div>
-
-          {/* Factual Climate Intelligence Callout Box */}
-          <div className="rounded-2xl p-3.5 bg-sky-500/10 border border-sky-400/20">
-            <div className="flex items-center gap-1.5 text-[11px] font-bold tracking-[0.12em] uppercase text-[#38BDF8] mb-1.5">
-              <span>{"\uD83D\uDCA1"}</span>
-              <span>FACTUAL CLIMATE INTELLIGENCE</span>
-            </div>
-            <p className="text-xs text-slate-200/90 leading-relaxed">
-              {climateData?.insight ||
-                `Historical ERA5 archive data for ${city.name} indicates consistent seasonal patterns across 2021\u20132025.`}
-            </p>
-          </div>
-        </>
+        </div>
       )}
     </section>
   );

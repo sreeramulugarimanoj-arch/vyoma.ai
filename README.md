@@ -1,11 +1,11 @@
 # VYOMA — Atmospheric Intelligence & Telemetry
 
-**VYOMA** is a dark-mode-first, mobile-first (`480px` centered frame) atmospheric telemetry, world radar, air quality, and 5-year ERA5 climate intelligence web application.
+**VYOMA** is a dark-mode-first, responsive (mobile, tablet, and desktop) atmospheric telemetry, world radar, air quality, and 5-year ERA5 climate intelligence web application.
 
 ## Screens & User Flow
 
 1. **Screen 1 — Landing / Splash Portal:** Glassmorphic hero portal with celestial moon/cloud illustration, `Launch World Radar →` CTA, and quick-access preset city chips (`Visakhapatnam`, `Madanapalle`, `Tirupati`) plus saved favorites.
-2. **Screen 2 — World Radar Command:** Interactive Leaflet global map supporting **Weather Map** (ArcGIS `World_Dark_Gray` with midnight-navy atmospheric tint + RainViewer IR Clouds + animated precipitation radar), **Satellite** (ArcGIS `World_Imagery` + boundaries/places), and **Dark Radar**, plus 12 live global hub beacons, city/coordinate autocomplete + `SCAN` transition, and tap-to-inspect preview cards.
+2. **Screen 2 — World Radar Command:** Interactive Leaflet global map supporting **Weather Map** (ArcGIS `World_Dark_Gray` with midnight-navy atmospheric tint + RainViewer IR Clouds + animated precipitation radar) and **Satellite** (ArcGIS `World_Imagery` + boundaries/places), plus 12 live global hub beacons, city/coordinate autocomplete + `SCAN` transition, and tap-to-inspect preview cards.
 3. **Screen 3 — City Atmospheric Telemetry Dashboard:**
    - Hero current weather readout and Hi/Lo range
    - **Hourly Atmosphere:** 24h smooth SVG temperature curve with precipitation badges and scrollable dual-tone icon timeline
